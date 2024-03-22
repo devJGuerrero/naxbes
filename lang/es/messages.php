@@ -10,6 +10,7 @@ return [
     'configurations' => 'Configuración|Configuraciones',
     'geolocation' => 'Geolocalización',
     'parameter' => 'Párametro|Párametros',
+    'product' => 'Producto|Productos',
     'list_of_records' => 'Listado de :entity',
     'create_record' => 'Crear :entity',
     'table_export_notification' => 'La exportación de la tabla de :entity se ha completado y se han exportado :rows filas.',

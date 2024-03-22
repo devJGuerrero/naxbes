@@ -61,4 +61,8 @@ return [
     'office' => 'Oficina|Oficinas',
     'site' => 'Lugar|Lugares',
     'zip' => 'Código postal| Códigos postales',
+    'description' => 'Descripción|Descripciones',
+    'category' => 'Categoría|Categorías',
+    'visible_to_customers' => 'Visible para los clientes',
+    'visibility' => 'Visibilidad',
 ];
