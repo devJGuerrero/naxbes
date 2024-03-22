@@ -1,34 +1,47 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Product\Resources;
 
 use Filament\Tables;
-use App\Enums\Genre;
-use App\Models\Customer;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
+use App\Models\Category;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use App\Filament\Clusters\Product;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\ToggleButtons;
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Shared\RelationManagers\AddressesRelationManager;
+use Filament\Forms\Components\MarkdownEditor;
+use App\Filament\Clusters\Product\Resources\CategoryResource\Pages;
 
 /**
- * Customer Entity.
+ * Category Entity.
  * This resource allows you to manage the global CRUD configuration.
  * 
- * @class CustomerResource
- * @package App\Filament\Resources
+ * @class CategoryResource
+ * @package App\Filament\Clusters\Product\Resources
  */
-class CustomerResource extends Resource
+class CategoryResource extends Resource
 {
+    /**
+     * Get cluster.
+     * 
+     * @return string
+     */
+    public static function getCluster(): ?string
+    {
+        return Product::class;
+    }
+
     /**
      * Get entity model.
      * 
@@ -36,7 +49,7 @@ class CustomerResource extends Resource
      */
     public static function getModel(): string
     {
-        return Customer::class;
+        return Category::class;
     }
 
     /**
@@ -46,27 +59,7 @@ class CustomerResource extends Resource
      */
     public static function getLabel(): ?string
     {
-        return trans_choice('entities.customers', 2);
-    }
-
-    /**
-     * Get navigation badge.
-     * 
-     * @return string
-     */
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    /**
-     * Get navigation group.
-     * 
-     * @return string
-     */
-    public static function getNavigationGroup(): ?string
-    {
-        return trans_choice('entities.ecommerce', 1);
+        return trans_choice('entities.categories', 2);
     }
 
     /**
@@ -76,7 +69,7 @@ class CustomerResource extends Resource
      */
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-users';
+        return 'heroicon-o-minus';
     }
 
     /**
@@ -86,7 +79,7 @@ class CustomerResource extends Resource
      */
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
 
     /**
@@ -114,60 +107,42 @@ class CustomerResource extends Resource
                             Group::make()
                                 ->schema([
                                     TextInput::make('name')
-                                        ->label(trans_choice('fields.name', 2))
+                                        ->label(trans_choice('fields.name', 1))
+                                        ->required()
                                         ->minLength(3)
                                         ->maxLength(255)
-                                        ->required(),
-                                    TextInput::make('last_name')
-                                        ->label(trans_choice('fields.last_name', 2))
-                                        ->minLength(3)
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    TextInput::make('slug')
+                                        ->disabled()
+                                        ->dehydrated()
+                                        ->required()
                                         ->maxLength(255)
-                                        ->required(),
-                                ])->columns(2),
-                            Group::make()
-                                ->schema([
-                                    TextInput::make('email')
-                                        ->label(trans_choice('fields.email', 1))
-                                        ->minLength(5)
-                                        ->maxLength(80)
-                                        ->email()
-                                        ->unique(ignoreRecord: true)
-                                        ->required(),
-                                    Group::make()
-                                        ->schema([
-                                            TextInput::make('phone')
-                                                ->label(trans_choice('fields.phone', 1))
-                                                ->minLength(5)
-                                                ->maxLength(25)
-                                                ->tel()
-                                                ->unique(ignoreRecord: true),
-                                            TextInput::make('mobile')
-                                                ->label(trans_choice('fields.mobile', 1))
-                                                ->minLength(5)
-                                                ->maxLength(25)
-                                                ->tel()
-                                                ->unique(ignoreRecord: true)
-                                                ->required(),
-                                        ])
-                                        ->columns(2),
+                                        ->unique(Category::class, 'slug', ignoreRecord: true),
                                 ])
                                 ->columns(2),
                             Group::make()
                                 ->schema([
-                                    DatePicker::make('birthday')
-                                        ->label(trans_choice('fields.birthday', 1))
-                                        ->native(false),
-                                ])
-                                ->columns(2),
+                                    Select::make('parent_id')
+                                        ->label(trans_choice('fields.category', 1))
+                                        ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
+                                        ->searchable()
+                                        ->placeholder('Select parent category'),
+                                ]),
                             Group::make()
                                 ->schema([
-                                    ToggleButtons::make('genre')
-                                        ->label(trans_choice('fields.genre', 1))
-                                        ->inline()
-                                        ->options(Genre::class)
+                                    Toggle::make('is_visible')
+                                        ->label(trans_choice('fields.visible_to_customers', 1))
+                                        ->default(true),
+                                ]),
+                            Group::make()
+                                ->schema([
+                                    MarkdownEditor::make('description')
+                                        ->label(trans_choice('fields.description', 1))
+                                        ->minLength(15)
+                                        ->maxLength(1000)
                                         ->required(),
                                 ])
-                                ->columns(2),
                         ]),
                 ])
                 ->columnSpan(['lg' => 3]),
@@ -185,13 +160,13 @@ class CustomerResource extends Resource
                         ->schema([
                             Placeholder::make('created_at')
                                 ->label(trans_choice('fields.created_at', 1))
-                                ->content(fn (Customer $record): ?string => $record->created_at?->diffForHumans()),
+                                ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
                             Placeholder::make('updated_at')
                                 ->label(trans_choice('fields.last_modified_on', 1))
-                                ->content(fn (Customer $record): ?string => $record->updated_at?->diffForHumans()),
+                                ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
                         ])
                         ->columnSpan(['lg' => 1])
-                        ->hidden(fn (?Customer $record) => $record === null),
+                        ->hidden(fn (?Category $record) => $record === null),
                 ])
                 ->columnSpan(['lg' => 1]),
         ];
@@ -210,24 +185,15 @@ class CustomerResource extends Resource
                 ->sortable()
                 ->toggleable()
                 ->searchable(),
-            TextColumn::make('last_name')
-                ->label(trans_choice('fields.last_name', 2))
+            TextColumn::make('parent.name')
+                ->label(trans_choice('fields.category', 1))
                 ->sortable()
                 ->toggleable()
                 ->searchable(),
-            TextColumn::make('mobile')
-                ->label(trans_choice('fields.mobile', 1))
+            IconColumn::make('is_visible')
+                ->label(trans_choice('fields.visibility', 1))
                 ->sortable()
-                ->toggleable()
-                ->searchable(),
-            TextColumn::make('email')
-                ->label(trans_choice('fields.email', 1))
-                ->sortable()
-                ->toggleable()
-                ->searchable(),
-            TextColumn::make('genre')
-                ->label(trans_choice('fields.genre', 1))
-                ->badge(),
+                ->toggleable(),
             TextColumn::make('status')
                 ->label(trans_choice('fields.status', 1))
                 ->badge()
@@ -302,9 +268,7 @@ class CustomerResource extends Resource
      */
     public static function getRelations(): array
     {
-        return [
-            AddressesRelationManager::class,
-        ];
+        return [];
     }
 
     /**
@@ -315,9 +279,9 @@ class CustomerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'edit'   => Pages\EditCustomer::route('/{record}/edit'),
+            'index'  => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit'   => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }

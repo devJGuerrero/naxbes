@@ -60,6 +60,10 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                trans_choice('entities.ecommerce', 1),
+                trans_choice('messages.configurations', 2),
             ]);
     }
 }

@@ -15,4 +15,6 @@ return [
     'wallets' => 'Billerta|Billeteras',
     'customers' => 'Cliente|Clientes',
     'addresses' => 'Dirección|Direcciones',
+    'ecommerce' => 'Comercio electrónico',
+    'categories' => 'Categoría|Categorías'
 ];

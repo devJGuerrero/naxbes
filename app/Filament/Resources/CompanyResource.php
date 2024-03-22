@@ -67,6 +67,16 @@ class CompanyResource extends Resource
     }
 
     /**
+     * Get navigation group.
+     * 
+     * @return string
+     */
+    public static function getNavigationGroup(): ?string
+    {
+        return trans_choice('entities.ecommerce', 1);
+    }
+
+    /**
      * Get navigation icon.
      * 
      * @return string
