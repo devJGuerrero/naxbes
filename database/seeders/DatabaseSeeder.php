@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             WalletPaymentMethodSeeder::class,
             CustomerSeeder::class,
             CategorySeeder::class,
+            BrandSeeder::class,
         ]);
     }
 }

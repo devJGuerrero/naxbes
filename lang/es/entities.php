@@ -16,5 +16,6 @@ return [
     'customers' => 'Cliente|Clientes',
     'addresses' => 'Dirección|Direcciones',
     'ecommerce' => 'Comercio electrónico',
-    'categories' => 'Categoría|Categorías'
+    'categories' => 'Categoría|Categorías',
+    'brands' => 'Marca|Marcas',
 ];
