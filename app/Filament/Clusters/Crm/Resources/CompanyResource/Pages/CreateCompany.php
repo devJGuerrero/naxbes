@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\CompanyResource\Pages;
+namespace App\Filament\Clusters\Crm\Resources\CompanyResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use App\Filament\Resources\CompanyResource;
+use App\Filament\Clusters\Crm\Resources\CompanyResource;
 
 /**
  * Page Create Company.
  * 
  * @class CreateCompany
- * @package App\Filament\Resources\CompanyResource\Pages
+ * @package App\Filament\Clusters\Crm\Resources\CompanyResource\Pages
  */
 class CreateCompany extends CreateRecord
 {

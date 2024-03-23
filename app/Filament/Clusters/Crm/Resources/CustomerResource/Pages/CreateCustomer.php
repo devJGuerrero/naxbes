@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\CustomerResource\Pages;
+namespace App\Filament\Clusters\Crm\Resources\CustomerResource\Pages;
+
 
 use Filament\Resources\Pages\CreateRecord;
-use App\Filament\Resources\CustomerResource;
+use App\Filament\Clusters\Crm\Resources\CustomerResource;
 
 /**
  * Page Create Customer.
  * 
  * @class CreateCustomer
- * @package App\Filament\Resources\CustomerResource\Pages
+ * @package App\Filament\Clusters\Crm\Resources\CustomerResource\Pages
  */
 class CreateCustomer extends CreateRecord
 {

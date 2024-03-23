@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Crm\Resources;
 
 use Filament\Tables;
 use App\Enums\Genre;
 use App\Models\Customer;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Filament\Clusters\Crm;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Toggle;
@@ -17,7 +18,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\ToggleButtons;
-use App\Filament\Resources\CustomerResource\Pages;
+use App\Filament\Clusters\Crm\Resources\CustomerResource\Pages;
 use App\Filament\Shared\RelationManagers\AddressesRelationManager;
 
 /**
@@ -25,10 +26,20 @@ use App\Filament\Shared\RelationManagers\AddressesRelationManager;
  * This resource allows you to manage the global CRUD configuration.
  * 
  * @class CustomerResource
- * @package App\Filament\Resources
+ * @package App\Filament\Clusters\Crm\Resources
  */
 class CustomerResource extends Resource
 {
+    /**
+     * Get cluster.
+     * 
+     * @return string
+     */
+    public static function getCluster(): ?string
+    {
+        return Crm::class;
+    }
+
     /**
      * Get entity model.
      * 
@@ -60,23 +71,13 @@ class CustomerResource extends Resource
     }
 
     /**
-     * Get navigation group.
-     * 
-     * @return string
-     */
-    public static function getNavigationGroup(): ?string
-    {
-        return trans_choice('entities.ecommerce', 1);
-    }
-
-    /**
      * Get navigation icon.
      * 
      * @return string
      */
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-users';
+        return 'heroicon-o-minus';
     }
 
     /**
@@ -86,7 +87,7 @@ class CustomerResource extends Resource
      */
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
 
     /**
