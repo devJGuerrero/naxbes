@@ -3,9 +3,9 @@
 namespace App\Filament\Clusters\Product\Resources;
 
 use Filament\Tables;
+use App\Models\Brand;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
-use App\Models\Category;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
@@ -21,16 +21,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Clusters\Product\Resources\CategoryResource\Pages;
+use App\Filament\Clusters\Product\Resources\BrandResource\Pages;
 
 /**
- * Category Entity.
+ * Brand Entity.
  * This resource allows you to manage the global CRUD configuration.
  * 
- * @class CategoryResource
+ * @class BrandResource
  * @package App\Filament\Clusters\Product\Resources
  */
-class CategoryResource extends Resource
+class BrandResource extends Resource
 {
     /**
      * Get cluster.
@@ -49,7 +49,7 @@ class CategoryResource extends Resource
      */
     public static function getModel(): string
     {
-        return Category::class;
+        return Brand::class;
     }
 
     /**
@@ -59,7 +59,7 @@ class CategoryResource extends Resource
      */
     public static function getLabel(): ?string
     {
-        return trans_choice('entities.categories', 2);
+        return trans_choice('entities.brands', 2);
     }
 
     /**
@@ -79,7 +79,7 @@ class CategoryResource extends Resource
      */
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
 
     /**
@@ -118,16 +118,16 @@ class CategoryResource extends Resource
                                         ->dehydrated()
                                         ->required()
                                         ->maxLength(255)
-                                        ->unique(Category::class, 'slug', ignoreRecord: true),
+                                        ->unique(Brand::class, 'slug', ignoreRecord: true),
                                 ])
                                 ->columns(2),
                             Group::make()
                                 ->schema([
-                                    Select::make('parent_id')
-                                        ->label(trans_choice('fields.category', 1))
-                                        ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
-                                        ->searchable()
-                                        ->placeholder('Select parent category'),
+                                    TextInput::make('website')
+                                        ->label(trans_choice('fields.website', 1))
+                                        ->url()
+                                        ->suffixIcon('heroicon-m-globe-alt')
+                                        ->maxLength(255),
                                 ]),
                             Group::make()
                                 ->schema([
@@ -160,13 +160,13 @@ class CategoryResource extends Resource
                         ->schema([
                             Placeholder::make('created_at')
                                 ->label(trans_choice('fields.created_at', 1))
-                                ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
+                                ->content(fn (Brand $record): ?string => $record->created_at?->diffForHumans()),
                             Placeholder::make('updated_at')
                                 ->label(trans_choice('fields.last_modified_on', 1))
-                                ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
+                                ->content(fn (Brand $record): ?string => $record->updated_at?->diffForHumans()),
                         ])
                         ->columnSpan(['lg' => 1])
-                        ->hidden(fn (?Category $record) => $record === null),
+                        ->hidden(fn (?Brand $record) => $record === null),
                 ])
                 ->columnSpan(['lg' => 1]),
         ];
@@ -185,8 +185,8 @@ class CategoryResource extends Resource
                 ->sortable()
                 ->toggleable()
                 ->searchable(),
-            TextColumn::make('parent.name')
-                ->label(trans_choice('fields.category', 1))
+            TextColumn::make('website')
+                ->label(trans_choice('fields.website', 1))
                 ->sortable()
                 ->toggleable()
                 ->searchable(),
@@ -279,9 +279,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit'   => Pages\EditCategory::route('/{record}/edit'),
+            'index'  => Pages\ListBrands::route('/'),
+            'create' => Pages\CreateBrand::route('/create'),
+            'edit'   => Pages\EditBrand::route('/{record}/edit'),
         ];
     }
 }
