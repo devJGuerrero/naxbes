@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\CustomerResource\Pages;
+namespace App\Filament\Clusters\Crm\Resources\CompanyResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Resources\CustomerResource;
+use App\Filament\Clusters\Crm\Resources\CompanyResource;
 
 /**
- * Page Edit Customer.
+ * Page Edit Company.
  * 
- * @class EditCustomer
- * @package App\Filament\Resources\CustomerResource\Pages
+ * @class EditCompany
+ * @package App\Filament\Clusters\Crm\Resources\CompanyResource\Pages
  */
-class EditCustomer extends EditRecord
+class EditCompany extends EditRecord
 {
     /**
      * Get resource.
@@ -21,7 +21,7 @@ class EditCustomer extends EditRecord
      */
     public static function getResource(): string
     {
-        return CustomerResource::class;
+        return CompanyResource::class;
     }
 
     /**

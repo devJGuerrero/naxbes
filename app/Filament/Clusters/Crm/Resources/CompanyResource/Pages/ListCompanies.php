@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\CompanyResource\Pages;
+namespace App\Filament\Clusters\Crm\Resources\CompanyResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Exports\CompanyExporter;
-use App\Filament\Resources\CompanyResource;
+use App\Filament\Clusters\Crm\Resources\CompanyResource;
 
 /**
  * Page List Companies.
  * 
  * @class ListCompanies
- * @package App\Filament\Resources\CompanyResource\Pages
+ * @package App\Filament\Clusters\Crm\Resources\CompanyResource\Pages
  */
 class ListCompanies extends ListRecords
 {

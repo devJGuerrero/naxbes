@@ -5,13 +5,13 @@ namespace App\Filament\Clusters;
 use Filament\Clusters\Cluster;
 
 /**
- * Product Cluster.
+ * Crm Cluster.
  * Clusters is a hierarchical structure that allows resources and pages to be grouped together.
  * 
- * @class Product
+ * @class Crm
  * @package App\Filament\Clusters
  */
-class Product extends Cluster
+class Crm extends Cluster
 {
     /**
      * Get cluster breadcrumb.
@@ -20,7 +20,7 @@ class Product extends Cluster
      */
     public static function getClusterBreadcrumb(): ?string
     {
-        return trans_choice('messages.product', 2);
+        return strtoupper(trans_choice('messages.crm', 1));
     }
 
     /**
@@ -30,7 +30,7 @@ class Product extends Cluster
      */
     public static function getNavigationLabel(): string
     {
-        return trans_choice('messages.product', 2);
+        return strtoupper(trans_choice('messages.crm', 1));
     }
 
     /**
@@ -40,7 +40,7 @@ class Product extends Cluster
      */
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-squares-plus';
+        return 'heroicon-o-identification';
     }
 
     /**
@@ -60,6 +60,6 @@ class Product extends Cluster
      */
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
 }

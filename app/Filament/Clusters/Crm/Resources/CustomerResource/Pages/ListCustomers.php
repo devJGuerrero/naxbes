@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\CustomerResource\Pages;
+namespace App\Filament\Clusters\Crm\Resources\CustomerResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Exports\CustomerExporter;
-use App\Filament\Resources\CustomerResource;
+use App\Filament\Clusters\Crm\Resources\CustomerResource;
 
 /**
  * Page List Customers.
  * 
  * @class ListCustomers
- * @package App\Filament\Resources\CustomerResource\Pages
+ * @package App\Filament\Clusters\Crm\Resources\CustomerResource\Pages
  */
 class ListCustomers extends ListRecords
 {

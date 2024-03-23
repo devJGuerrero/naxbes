@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Crm\Resources;
 
 use Filament\Tables;
 use App\Models\City;
@@ -11,6 +11,7 @@ use App\Models\Company;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use App\Filament\Clusters\Crm;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Tables\Filters\Filter;
@@ -25,17 +26,27 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\ToggleButtons;
-use App\Filament\Resources\CompanyResource\Pages;
+use App\Filament\Clusters\Crm\Resources\CompanyResource\Pages;
 
 /**
  * Company Entity.
  * This resource allows you to manage the global CRUD configuration.
  * 
  * @class CompanyResource
- * @package App\Filament\Resources
+ * @package App\Filament\Clusters\Crm\Resources
  */
 class CompanyResource extends Resource
 {
+    /**
+     * Get cluster.
+     * 
+     * @return string
+     */
+    public static function getCluster(): ?string
+    {
+        return Crm::class;
+    }
+
     /**
      * Get entity model.
      * 
@@ -67,23 +78,13 @@ class CompanyResource extends Resource
     }
 
     /**
-     * Get navigation group.
-     * 
-     * @return string
-     */
-    public static function getNavigationGroup(): ?string
-    {
-        return trans_choice('entities.ecommerce', 1);
-    }
-
-    /**
      * Get navigation icon.
      * 
      * @return string
      */
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-briefcase';
+        return 'heroicon-o-minus';
     }
 
     /**
@@ -93,7 +94,7 @@ class CompanyResource extends Resource
      */
     public static function getNavigationSort(): ?int
     {
-        return 3;
+        return 2;
     }
 
     /**

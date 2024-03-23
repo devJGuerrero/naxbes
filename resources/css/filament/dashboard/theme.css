@@ -3,12 +3,12 @@
 @config 'tailwind.config.js';
 
 .fi-body {
-    @apply bg-slate-50;
+    @apply bg-white;
 }
 
 body>div.fi-layout.flex.min-h-screen.w-full.flex-row-reverse.overflow-x-clip>aside>div>header,
 .fi-topbar nav {
-    @apply ring-0 ring-white py-8 shadow-none;
+    @apply ring-0 bg-white py-8 shadow-sm;
 }
 
 .fi-header-heading {
@@ -54,17 +54,13 @@ body>div.fi-layout.flex.min-h-screen.w-full.flex-row-reverse.overflow-x-clip>asi
 
 .fi-btn-label,
 .fi-modal-heading,
-.fi-header-heading,
-.fi-sidebar-item-label,
-.fi-breadcrumbs-item-label {
+.fi-header-heading {
     text-transform: lowercase;
 }
 
 .fi-btn-label:first-letter,
 .fi-modal-heading:first-letter,
-.fi-header-heading:first-letter,
-.fi-sidebar-item-label:first-letter,
-.fi-breadcrumbs-item-label:first-letter {
+.fi-header-heading:first-letter {
     text-transform: uppercase;
 }
 
